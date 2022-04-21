@@ -47,29 +47,6 @@ client.on('messageCreate', async message => {
   }
 })
 
-client.slashCommands = new Discord.Collection();
-
-const cmdFiles = fs.readdirSync('./slash').filter(file => file.endsWith('.js'));
-
-for (const file of cmdFiles) {
-	const command = require(`./slash/${file}`);
-	client.slashCommands.set(command.data.name, command);
-}
-
-client.on('interactionCreate', async interaction => {
-	if (interaction.isCommand()) {
-    const command = client.slashCommands.get(interaction.commandName);
-  	if (!command) return;
-  
-  	try {
-  		await command.execute(client, interaction);
-  	} catch (error) {
-  		console.error(error);
-  		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-  	}
-  }
-});
-
 const Levels = require('discord-xp')
 Levels.setURL(process.env['mongoPath'])
 
