@@ -8,8 +8,7 @@ var client = new Discord.Client({
   ]
 });
 var fs = require('fs');
-var prefix = ';';
-require('./slash-commands');
+var { prefix } = require('./config.json');
 require('./mongo');
 
 client.once('ready', async () => {
